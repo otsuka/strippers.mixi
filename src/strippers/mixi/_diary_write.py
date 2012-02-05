@@ -9,7 +9,7 @@ except ImportError:
     except ImportError:
         import simplejson as json
 
-DIARY_URI = 'http://api.mixi-platform.com/2/diary/articles/@me/@self'
+DIARY_URI = '/2/diary/articles/@me/@self'
 
 def _write_diary(self, title, body, privacy=V_FRIENDS):
     """
@@ -18,7 +18,7 @@ def _write_diary(self, title, body, privacy=V_FRIENDS):
 
     @param title: 日記のタイトル (全角100文字以内)
     @type title: str
-    @param body: 日記の本文 (全角10000文字以内)
+    @param body: 日記の本文 (全角10,000文字以内)
     @type body: str
     @param privacy: 日記の公開範囲
     @type privacy: str

@@ -15,15 +15,16 @@ except ImportError:
         import simplejson as json
 
 log = logging.getLogger('graphapi')
-log_handler = logging.StreamHandler()
-log_handler.setLevel(logging.DEBUG)
-log.addHandler(log_handler)
+#log_handler = logging.StreamHandler()
+#log_handler.setLevel(logging.DEBUG)
+#log.addHandler(log_handler)
 
-__version__ = '1.0rc3'
+__version__ = '1.0'
 
 
 AUTORIZATION_URI = 'https://mixi.jp/connect_authorize.pl'
-TOKEN_URI = 'https://secure.mixi-platform.com/2/token'
+TOKEN_URI        = 'https://secure.mixi-platform.com/2/token'
+API_HOST         = 'api.mixi-platform.com'
 
 # デバイス定数の定義
 DEVICE_PC         = 'pc'
@@ -68,9 +69,10 @@ class MixiGraphAPI(object):
     CONTENT_TYPE_MULTIPART = 'multipart/form-data'
     CONTENT_TYPE_JSON = 'application/json; charset=utf-8'
 
-    def __init__(self, consumer_key, consumer_secret, scopes, access_token=None, refresh_token=None):
+    def __init__(self, consumer_key, consumer_secret, scopes, access_token=None, refresh_token=None, use_https=True):
         self._consumer_key = consumer_key
         self._consumer_secret = consumer_secret
+        self._use_https = bool(use_https)
 
         self.device = DEVICE_PC
         self.state = None
@@ -200,6 +202,25 @@ class MixiGraphAPI(object):
             results[self._to_utf8(key)] = self._to_utf8(val)
         return results
 
+    def _build_api_uri(self, path):
+        """
+        指定されたパスが 'https://' または 'http://' で始まっていない場合、
+        プロトコルと API ホストを加えた URI を返します。
+        'https://'、'http://' で始まっている場合は、何もせずにそのまま返します。
+        
+        @param path: パス
+        @type path: str
+        @return: URI
+        @rtype: str
+        """
+        if not path.startswith('https://') and not path.startswith('http://'):
+            protocol = 'https://' if self._use_https else 'http://'
+            if not path.startswith('/'):
+                path = '/' + path
+            return protocol + API_HOST + path
+        else:
+            return path
+
     def post(self, uri, params=None, content_type=None):
         return self._send_api_request(uri, params, 'POST', content_type)
 
@@ -233,6 +254,8 @@ class MixiGraphAPI(object):
         else:
             data = str(self._to_utf8(params))
 
+        uri = self._build_api_uri(uri)
+
         http_method = http_method.upper()
         if http_method in ('POST', 'PUT'):
             req = self._build_request(uri, http_method)
@@ -249,6 +272,7 @@ class MixiGraphAPI(object):
         else:
             opener = urllib2.build_opener()
 
+        log.debug(u"Sent an api request: %s", req.get_full_url())
         try:
             return opener.open(req).read()
         except urllib2.HTTPError, e:

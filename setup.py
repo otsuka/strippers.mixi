@@ -30,7 +30,7 @@ setup(
     include_package_data = True,
     zip_safe             = False,
     classifiers          = [
-                            'Development Status :: 4 - Beta',
+                            'Development Status :: 5 - Production/Stable',
                             'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
                             'Intended Audience :: Developers',
                             'Topic :: Software Development :: Libraries :: Python Modules',

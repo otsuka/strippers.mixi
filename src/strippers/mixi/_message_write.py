@@ -8,8 +8,8 @@ except ImportError:
     except ImportError:
         import simplejson as json
 
-MESSAGE_SEND_URI = 'http://api.mixi-platform.com/2/messages/@me/@self/@outbox'
-MESSAGE_URI = 'http://api.mixi-platform.com/2/messages/@me/@self/@inbox/%s'
+MESSAGE_SEND_URI = '/2/messages/@me/@self/@outbox'
+MESSAGE_URI      = '/2/messages/@me/@self/@inbox/%s'
 
 def _send_message(self, recipient_id, title, body):
     """

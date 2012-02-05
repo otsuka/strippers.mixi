@@ -8,7 +8,7 @@ except ImportError:
     except ImportError:
         import simplejson as json
 
-SHARE_URI = 'http://api.mixi-platform.com/2/share'
+SHARE_URI = '/2/share'
 
 def _share(self, key, title, url, image=None, pc_url=None, smartphone_url=None, mobile_url=None, description=None, comment=None, privacy=V_FRIENDS):
 

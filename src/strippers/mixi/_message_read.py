@@ -7,7 +7,7 @@ except ImportError:
     except ImportError:
         import simplejson as json
 
-MESSAGE_URI = 'http://api.mixi-platform.com/2/messages/@me/@inbox/%s'
+MESSAGE_URI = '/2/messages/@me/@inbox/%s'
 
 def _get_messages(self, updated_since=None, count=50, start_index=0):
     """
@@ -15,6 +15,8 @@ def _get_messages(self, updated_since=None, count=50, start_index=0):
 
     @param updated_since: このパラメータにて指定された日時よりも新しいメッセージを、APIの取得結果として返却します。文字列で指定する場合、日時の書式は「yyyy-mm-ddThh:mm:ssZ」や「yyyy-mm-ddThh:mm:ss+09:00」とします
     @type updated_since: str
+
+    @todo: update_since パラメーターを datetime オブジェクトでも指定できるようにする
     """
     params = {
             'count': count,

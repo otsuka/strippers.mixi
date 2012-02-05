@@ -12,8 +12,8 @@ except ImportError:
     except ImportError:
         import simplejson as json
 
-STATUS_UPDATE_URI = 'http://api.mixi-platform.com/2/voice/statuses/update'
-STATUS_DELETE_URI = 'http://api.mixi-platform.com/2/voice/statuses/destroy/%s'
+STATUS_UPDATE_URI = '/2/voice/statuses/update'
+STATUS_DELETE_URI = '/2/voice/statuses/destroy/%s'
 
 _TMPFILE_PREFIX = 'strippers_mixi_voice_tmp'
 

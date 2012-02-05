@@ -8,7 +8,7 @@ except ImportError:
     except ImportError:
         import simplejson as json
 
-PEOPLE_URI = 'http://api.mixi-platform.com/2/people/@me/%s'
+PEOPLE_URI = '/2/people/@me/%s'
 
 def _get_friends(self, group_id='@friends', sort_by=None, sort_order='ascending', thumbnail_privacy='everyone', count=20, start_index=0):
     """
